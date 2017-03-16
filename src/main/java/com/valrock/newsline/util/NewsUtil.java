@@ -27,7 +27,7 @@ public class NewsUtil {
 
     private static List<News> getFiltered(List<News> newsList, LocalTime startTime, LocalTime endTime) {
         return newsList.stream()
-                .filter(news -> DateTimeUtil.isBetween(news.getDateTime().toLocalTime(), startTime, endTime))
+                .filter(news -> DateTimeUtil.isBetween(news.getTime(), startTime, endTime))
                 .collect(Collectors.toList());
 
     }

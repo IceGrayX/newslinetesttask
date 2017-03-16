@@ -1,6 +1,8 @@
 package com.valrock.newsline.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Created by Валерий on 16.03.2017.
@@ -35,6 +37,14 @@ public class News {
 
     public String getImageURL() {
         return imageURL;
+    }
+
+    public LocalDate getDate(){
+        return dateTime.toLocalDate();
+    }
+
+    public LocalTime getTime(){
+        return dateTime.toLocalTime();
     }
 
     @Override
