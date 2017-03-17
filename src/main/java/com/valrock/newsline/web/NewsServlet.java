@@ -3,7 +3,6 @@ package com.valrock.newsline.web;
 import com.valrock.newsline.model.News;
 import com.valrock.newsline.repository.InMemoryNewRepositoryImpl;
 import com.valrock.newsline.repository.NewsRepository;
-import com.valrock.newsline.util.NewsUtil;
 import org.slf4j.Logger;
 
 import javax.servlet.ServletConfig;
