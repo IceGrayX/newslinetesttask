@@ -12,7 +12,18 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>newsServlet</servlet-name>
-        <url-pattern>/news</url-pattern>
+        <url-pattern>/newsline</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>userServlet</servlet-name>
+        <servlet-class>com.valrock.newsline.web.UserServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>userServlet</servlet-name>
+        <url-pattern>/users</url-pattern>
     </servlet-mapping>
 
 </web-app>
