@@ -7,8 +7,7 @@ import java.time.LocalTime;
 /**
  * Created by Валерий on 16.03.2017.
  */
-public class News {
-    private Integer id;
+public class News extends BaseEntity{
 
     private final String header;
 
@@ -23,19 +22,11 @@ public class News {
     }
 
     public News(Integer id, String header, LocalDateTime dateTime, String textnews, String imageURL){
-        this.id = id;
+        super(id);
         this.header = header;
         this.dateTime = dateTime;
         this.textnews = textnews;
         this.imageURL = imageURL;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getHeader() {
@@ -60,10 +51,6 @@ public class News {
 
     public LocalTime getTime(){
         return dateTime.toLocalTime();
-    }
-
-    public boolean isNew(){
-        return id == null;
     }
 
     @Override

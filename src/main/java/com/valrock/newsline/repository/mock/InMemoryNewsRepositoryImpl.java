@@ -4,6 +4,7 @@ import com.valrock.newsline.model.News;
 import com.valrock.newsline.repository.NewsRepository;
 import com.valrock.newsline.util.DateTimeUtil;
 import com.valrock.newsline.util.NewsUtil;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -22,6 +23,7 @@ import static com.valrock.newsline.repository.mock.InMemoryUserRepositoryImpl.US
 /**
  * Created by Валерий on 17.03.2017.
  */
+@Repository
 public class InMemoryNewsRepositoryImpl implements NewsRepository {
     private static final Comparator<News> NEWS_COMPARATOR = Comparator.comparing(News::getDateTime).reversed();
 
