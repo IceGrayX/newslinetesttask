@@ -1,5 +1,6 @@
 package com.valrock.newsline.util;
 
+import com.valrock.newsline.model.BaseEntity;
 import com.valrock.newsline.util.exception.NotFoundException;
 
 /**
@@ -21,5 +22,19 @@ public class ValidationUtil {
 
     private static void checkNotFound(boolean found, String msg) {
         if (!found) throw new NotFoundException("Not found entity with " + msg);
+    }
+
+    public static void checkNew(BaseEntity entity){
+        if (!entity.isNew()){
+            throw new IllegalArgumentException(entity + " must be new (id=null)");
+        }
+    }
+
+    public static void checkIdConsistent(BaseEntity entity, int id){
+        if (entity.isNew()){
+            entity.setId(id);
+        } else if (entity.getId() != id){
+            throw new IllegalArgumentException(entity + " must be with id=" + id);
+        }
     }
 }

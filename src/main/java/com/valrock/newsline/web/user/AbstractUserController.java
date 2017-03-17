@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+import static com.valrock.newsline.util.ValidationUtil.checkIdConsistent;
+import static com.valrock.newsline.util.ValidationUtil.checkNew;
+
 /**
  * Created by Валерий on 17.03.2017.
  */
@@ -28,7 +31,7 @@ public abstract class AbstractUserController {
     }
 
     public User create(User user){
-        user.setId(null);
+        checkNew(user);
         LOG.info("create " + user);
         return userService.save(user);
     }
@@ -39,7 +42,7 @@ public abstract class AbstractUserController {
     }
 
     public void update(User user, int id){
-        user.setId(id);
+        checkIdConsistent(user, id);
         LOG.info("update " + user);
         userService.update(user);
     }
