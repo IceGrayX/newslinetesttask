@@ -2,10 +2,12 @@ package com.valrock.newsline.web.user;
 
 import com.valrock.newsline.AuthorizedUser;
 import com.valrock.newsline.model.User;
+import org.springframework.stereotype.Controller;
 
 /**
  * Created by Валерий on 17.03.2017.
  */
+@Controller
 public class ProfileRestController extends AbstractUserController{
 
     public User get(){

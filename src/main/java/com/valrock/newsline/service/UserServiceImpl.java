@@ -3,6 +3,8 @@ package com.valrock.newsline.service;
 import com.valrock.newsline.model.User;
 import com.valrock.newsline.repository.UserRepository;
 import com.valrock.newsline.util.exception.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -12,13 +14,11 @@ import static com.valrock.newsline.util.ValidationUtil.checkNotFoundWithId;
 /**
  * Created by Валерий on 17.03.2017.
  */
+@Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     private UserRepository userRepository;
-
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     public User save(User user) {

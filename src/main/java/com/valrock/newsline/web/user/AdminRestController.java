@@ -1,12 +1,14 @@
 package com.valrock.newsline.web.user;
 
 import com.valrock.newsline.model.User;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
 /**
  * Created by Валерий on 17.03.2017.
  */
+@Controller
 public class AdminRestController extends AbstractUserController{
     @Override
     public List<User> getAll() {

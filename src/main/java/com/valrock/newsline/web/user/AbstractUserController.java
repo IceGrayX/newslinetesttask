@@ -4,6 +4,7 @@ import com.valrock.newsline.model.User;
 import com.valrock.newsline.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public abstract class AbstractUserController {
     protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
+    @Autowired
     private UserService userService;
 
     public List<User> getAll(){
