@@ -4,4 +4,8 @@
 
     <bean class="com.valrock.newsline.repository.mock.MockUserRepositoryImpl" id="mockUserRepository"/>
 
+    <bean class="com.valrock.newsline.service.UserServiceImpl">
+        <property name="userRepository" ref="mockUserRepository"/>
+    </bean>
+
 </beans>
