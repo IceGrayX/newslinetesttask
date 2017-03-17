@@ -1,7 +1,7 @@
 package com.valrock.newsline.web;
 
 import com.valrock.newsline.model.News;
-import com.valrock.newsline.repository.InMemoryNewRepositoryImpl;
+import com.valrock.newsline.repository.mock.InMemoryNewsRepositoryImpl;
 import com.valrock.newsline.repository.NewsRepository;
 import org.slf4j.Logger;
 
@@ -28,7 +28,7 @@ public class NewsServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        repository = new InMemoryNewRepositoryImpl();
+        repository = new InMemoryNewsRepositoryImpl();
     }
 
     @Override

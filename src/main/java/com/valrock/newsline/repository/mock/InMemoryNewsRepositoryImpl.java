@@ -1,6 +1,7 @@
-package com.valrock.newsline.repository;
+package com.valrock.newsline.repository.mock;
 
 import com.valrock.newsline.model.News;
+import com.valrock.newsline.repository.NewsRepository;
 import com.valrock.newsline.util.NewsUtil;
 
 import java.util.Collection;
@@ -11,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by Валерий on 17.03.2017.
  */
-public class InMemoryNewRepositoryImpl implements NewsRepository {
+public class InMemoryNewsRepositoryImpl implements NewsRepository {
     private Map<Integer, News> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
