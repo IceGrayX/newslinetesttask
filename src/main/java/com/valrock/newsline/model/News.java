@@ -15,18 +15,18 @@ public class News extends BaseEntity{
 
     private final String textnews;
 
-    private final String imageURL;
+    private final String imageName;
 
-    public News(String header, LocalDateTime dateTime, String textnews, String imageURL) {
-        this(null, header, dateTime, textnews, imageURL);
+    public News(String header, LocalDateTime dateTime, String textnews, String imageName) {
+        this(null, header, dateTime, textnews, imageName);
     }
 
-    public News(Integer id, String header, LocalDateTime dateTime, String textnews, String imageURL){
+    public News(Integer id, String header, LocalDateTime dateTime, String textnews, String imageName){
         super(id);
         this.header = header;
         this.dateTime = dateTime;
         this.textnews = textnews;
-        this.imageURL = imageURL;
+        this.imageName = imageName;
     }
 
     public String getHeader() {
@@ -41,8 +41,8 @@ public class News extends BaseEntity{
         return textnews;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImageName() {
+        return imageName;
     }
 
     public LocalDate getDate(){
@@ -60,7 +60,7 @@ public class News extends BaseEntity{
                 ", header='" + header + '\'' +
                 ", dateTime=" + dateTime +
                 ", textnews='" + textnews + '\'' +
-                ", imageURL='" + imageURL + '\'' +
+                ", imageName='" + imageName + '\'' +
                 '}';
     }
 }

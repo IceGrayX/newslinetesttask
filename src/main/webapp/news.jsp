@@ -50,7 +50,7 @@
         </dl>
         <dl>
             <dt>Image:</dt>
-            <dd><input type="text" value="${news.imageURL}" size="40" name="imageURL"></dd>
+            <dd><input type="text" value="${news.imageName}" size="40" name="imageName"></dd>
         </dl>
         <button type="submit">Save</button>
         <button onclick="window.history.back()">Cancel</button>
