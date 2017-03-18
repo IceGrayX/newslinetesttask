@@ -49,10 +49,11 @@ public class NewsServlet extends HttpServlet {
                 request.getParameter("header"),
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("textnews"),
-                request.getParameter("imageURL"));
+                request.getParameter("imageName"));
 
         if (news.isNew()){
             LOG.info("Create {}", news);
+            newsController.create(news);
         } else {
             LOG.info("Update {}", news);
             newsController.update(news, getId(request));
