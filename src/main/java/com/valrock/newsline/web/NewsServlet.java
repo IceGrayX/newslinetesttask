@@ -1,10 +1,10 @@
 package com.valrock.newsline.web;
 
-import com.valrock.newsline.AuthorizedUser;
 import com.valrock.newsline.model.News;
-import com.valrock.newsline.repository.mock.InMemoryNewsRepositoryImpl;
-import com.valrock.newsline.repository.NewsRepository;
+import com.valrock.newsline.web.news.NewsRestController;
 import org.slf4j.Logger;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -24,12 +24,20 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class NewsServlet extends HttpServlet {
     private static final Logger LOG = getLogger(NewsServlet.class);
 
-    private NewsRepository repository;
+    private ConfigurableApplicationContext springContext;
+    private NewsRestController newsController;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        repository = new InMemoryNewsRepositoryImpl();
+        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        newsController = springContext.getBean(NewsRestController.class);
+    }
+
+    @Override
+    public void destroy() {
+        springContext.close();
+        super.destroy();
     }
 
     @Override
@@ -37,14 +45,18 @@ public class NewsServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
 
-        News news = new News(id.isEmpty() ? null : Integer.valueOf(id),
+        final News news = new News(id.isEmpty() ? null : Integer.valueOf(id),
                 request.getParameter("header"),
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("textnews"),
                 request.getParameter("imageURL"));
 
-        LOG.info(news.isNew() ? "Create {}" : "Update {}", news);
-        repository.save(news, AuthorizedUser.id());
+        if (news.isNew()){
+            LOG.info("Create {}", news);
+        } else {
+            LOG.info("Update {}", news);
+            newsController.update(news, getId(request));
+        }
         response.sendRedirect("newsline");
     }
 
@@ -54,17 +66,17 @@ public class NewsServlet extends HttpServlet {
 
         if (action == null){
             LOG.info("getAll");
-            request.setAttribute("newsline", repository.getAll(AuthorizedUser.id()));
+            request.setAttribute("newsline", newsController.getAll());
             request.getRequestDispatcher("/newsline.jsp").forward(request, response);
         } else if ("delete".equals(action)){
             int id = getId(request);
             LOG.info("Delete {}", id);
-            repository.delete(id, AuthorizedUser.id());
+            newsController.delete(id);
             response.sendRedirect("newsline");
         } else if ("create".equals(action) || "update".equals(action)){
             final News news = action.equals("create") ?
                     new News("", LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", "") :
-                    repository.get(getId(request), AuthorizedUser.id());
+                    newsController.get(getId(request));
             request.setAttribute("news", news);
             request.getRequestDispatcher("news.jsp").forward(request, response);
         }
