@@ -11,7 +11,7 @@ import java.util.Collection;
 public interface NewsRepository {
     News save(News news, int userId);
 
-    boolean delete(int id, int userId);
+    boolean delete(int id, int userId, String path);
 
     News get(int id, int userId);
 

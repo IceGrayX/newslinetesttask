@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collection;
-import java.util.List;
 
 import static com.valrock.newsline.util.ValidationUtil.checkIdConsistent;
 import static com.valrock.newsline.util.ValidationUtil.checkNew;
@@ -34,10 +33,10 @@ public class NewsRestController {
         return newsService.get(id, userId);
     }
 
-    public void delete(int id){
+    public void delete(int id, String path){
         int userId = AuthorizedUser.id();
         LOG.info("delete news {} for User {}", id, userId);
-        newsService.delete(id, userId);
+        newsService.delete(id, userId, path);
     }
 
     public Collection<News> getAll(){

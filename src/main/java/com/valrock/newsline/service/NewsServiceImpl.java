@@ -26,8 +26,8 @@ public class NewsServiceImpl implements NewsService{
     }
 
     @Override
-    public void delete(int id, int userId) throws NotFoundException {
-        checkNotFoundWithId(repository.delete(id, userId), id);
+    public void delete(int id, int userId, String path) throws NotFoundException {
+        checkNotFoundWithId(repository.delete(id, userId, path), id);
     }
 
     @Override

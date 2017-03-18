@@ -14,7 +14,7 @@ import java.util.Collection;
 public interface NewsService {
     News get(int id, int userId) throws NotFoundException;
 
-    void delete(int id, int userId) throws NotFoundException;
+    void delete(int id, int userId, String path) throws NotFoundException;
 
     default Collection<News> getBetweenDates(LocalDate startDate, LocalDate endDate, int userId){
         return getBetweenDateTimes(LocalDateTime.of(startDate, LocalTime.MIN), LocalDateTime.of(endDate, LocalTime.MAX), userId);

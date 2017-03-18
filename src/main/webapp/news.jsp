@@ -34,7 +34,7 @@
     <h2>${param.action == 'create' ? 'Create news' : 'Edit news'}</h2>
     <hr>
     <jsp:useBean id="news" type="com.valrock.newsline.model.News" scope="request"/>
-    <form method="post" action="newsline">
+    <form method="post" action="newsline" enctype="multipart/form-data">
         <input type="hidden" name="id" value="${news.id}">
         <dl>
             <dt>Header:</dt>
@@ -50,7 +50,7 @@
         </dl>
         <dl>
             <dt>Image:</dt>
-            <dd><input type="text" value="${news.imageName}" size="40" name="imageName"></dd>
+            <dd><input type="file"  name="image"></dd>
         </dl>
         <button type="submit">Save</button>
         <button onclick="window.history.back()">Cancel</button>

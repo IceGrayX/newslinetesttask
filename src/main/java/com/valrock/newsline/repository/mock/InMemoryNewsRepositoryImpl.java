@@ -7,7 +7,6 @@ import com.valrock.newsline.util.NewsUtil;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
@@ -17,8 +16,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.valrock.newsline.repository.mock.InMemoryUserRepositoryImpl.ADMIN_ID;
 import static com.valrock.newsline.repository.mock.InMemoryUserRepositoryImpl.USER_ID;
+import static com.valrock.newsline.util.NewsUtil.deleteFile;
 
 /**
  * Created by Валерий on 17.03.2017.
@@ -33,8 +32,8 @@ public class InMemoryNewsRepositoryImpl implements NewsRepository {
     {
         NewsUtil.NEWS_LIST.forEach(news -> save(news, USER_ID));
 
-        save(new News("NewsAdmin1", LocalDateTime.of(2017, Month.MARCH, 1, 10, 0), "texttexttexttexttexttext", "imageURL1"), ADMIN_ID);
-        save(new News("NewsAdmin2", LocalDateTime.of(2017, Month.MARCH, 2, 11, 0), "texttexttexttexttexttext", "imageURL2"), ADMIN_ID);
+/*        save(new News("NewsAdmin1", LocalDateTime.of(2017, Month.MARCH, 1, 10, 0), "texttexttexttexttexttext", "imageURL1"), ADMIN_ID);
+        save(new News("NewsAdmin2", LocalDateTime.of(2017, Month.MARCH, 2, 11, 0), "texttexttexttexttexttext", "imageURL2"), ADMIN_ID);*/
     }
 
 
@@ -53,8 +52,9 @@ public class InMemoryNewsRepositoryImpl implements NewsRepository {
     }
 
     @Override
-    public boolean delete(int id, int userId) {
+    public boolean delete(int id, int userId, String path) {
         Map<Integer, News> newsMap = repository.get(userId);
+        deleteFile(path + newsMap.get(id).getImageName());
         return newsMap != null && newsMap.remove(id) != null;
     }
 
