@@ -1,6 +1,7 @@
 package com.valrock.newsline.web;
 
 import com.valrock.newsline.model.News;
+import com.valrock.newsline.util.DateTimeUtil;
 import com.valrock.newsline.web.news.NewsRestController;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -17,7 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
@@ -53,35 +56,45 @@ public class NewsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
-        if (isMultipart){
-            try {
-                String id;
-                String header;
-                String dateTime;
-                String textnews;
-                String path = request.getServletContext().getRealPath("");
-                FileItem item;
-                List items = upload.parseRequest(request);
-                id = ((FileItem) items.get(0)).getString("UTF-8");
-                header = ((FileItem) items.get(1)).getString("UTF-8");
-                dateTime = ((FileItem) items.get(2)).getString("UTF-8");
-                textnews = ((FileItem) items.get(3)).getString("UTF-8");
-                item = (FileItem) items.get(4);
+        String action = request.getParameter("action");
+        if (action == null) {
+            if (isMultipart){
+                try {
+                    String id;
+                    String header;
+                    String dateTime;
+                    String textnews;
+                    String path = request.getServletContext().getRealPath("");
+                    FileItem item;
+                    List items = upload.parseRequest(request);
+                    id = ((FileItem) items.get(0)).getString("UTF-8");
+                    header = ((FileItem) items.get(1)).getString("UTF-8");
+                    dateTime = ((FileItem) items.get(2)).getString("UTF-8");
+                    textnews = ((FileItem) items.get(3)).getString("UTF-8");
+                    item = (FileItem) items.get(4);
 
-                News news = new News(id.isEmpty() ? null : Integer.valueOf(id),
-                        header, LocalDateTime.parse(dateTime), textnews, "");
+                    News news = new News(id.isEmpty() ? null : Integer.valueOf(id),
+                            header, LocalDateTime.parse(dateTime), textnews, "");
 
-                if (news.isNew()){
-                    LOG.info("Create {}", news);
-                    newsController.create(news, path, item);
-                } else {
-                    LOG.info("Update {}", news);
-                    newsController.update(news, news.getId(), path, item);
+                    if (id.isEmpty()){
+                        LOG.info("Create {}", news);
+                        newsController.create(news, path, item);
+                    } else {
+                        LOG.info("Update {}", news);
+                        newsController.update(news, news.getId(), path, item);
+                    }
+                    response.sendRedirect("newsline");
+                } catch (FileUploadException e) {
+                    LOG.info("Exception upload file");
                 }
-                response.sendRedirect("newsline");
-            } catch (FileUploadException e) {
-                LOG.info("Exception upload file");
             }
+        } else if ("filter".equals(action)){
+            LocalDate startDate = DateTimeUtil.parseLocalDate(request.getParameter("startDate"));
+            LocalDate endDate = DateTimeUtil.parseLocalDate(request.getParameter("endDate"));
+            LocalTime startTime = DateTimeUtil.parseLocalTime(request.getParameter("startTime"));
+            LocalTime endTime = DateTimeUtil.parseLocalTime(request.getParameter("endTime"));
+            request.setAttribute("newsline", newsController.getBetween(startDate, startTime, endDate, endTime));
+            request.getRequestDispatcher("/newsline.jsp").forward(request, response);
         }
     }
 

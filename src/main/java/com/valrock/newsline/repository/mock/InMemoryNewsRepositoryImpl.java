@@ -3,7 +3,6 @@ package com.valrock.newsline.repository.mock;
 import com.valrock.newsline.model.News;
 import com.valrock.newsline.repository.NewsRepository;
 import com.valrock.newsline.util.DateTimeUtil;
-import com.valrock.newsline.util.NewsUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.springframework.stereotype.Repository;
 
@@ -17,7 +16,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.valrock.newsline.repository.mock.InMemoryUserRepositoryImpl.USER_ID;
 import static com.valrock.newsline.util.NewsUtil.deleteFile;
 import static com.valrock.newsline.util.NewsUtil.saveFile;
 
