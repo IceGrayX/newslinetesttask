@@ -19,7 +19,10 @@ public class User extends NamedEntity {
     private Set<Role> roles;
 
     public User(){
+    }
 
+    public User(User u) {
+        this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRoles());
     }
 
     public User(Integer id, String name, String email, String password, Role role, Role... roles){

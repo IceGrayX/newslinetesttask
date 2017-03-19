@@ -41,7 +41,7 @@ public class NewsServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
         newsController = springContext.getBean(NewsRestController.class);
         diskFileItemFactory = new DiskFileItemFactory(1024 * 1024 * 10, new File("/temp/"));
         upload = new ServletFileUpload(diskFileItemFactory);
