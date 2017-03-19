@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,16 @@ public class InMemoryUserRepositoryImpl implements UserRepository{
 
     public static final int USER_ID = 1;
     public static final int ADMIN_ID = 2;
+
+    @PostConstruct
+    public void postConstruct() {
+        LOG.info("+++ PostConstruct");
+    }
+
+    @PreDestroy
+    public void preDestroy() {
+        LOG.info("+++ PreDestroy");
+    }
 
     @Override
     public User save(User user) {
