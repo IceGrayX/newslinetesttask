@@ -113,7 +113,7 @@ public class NewsServlet extends HttpServlet {
             newsController.delete(id, path);
             response.sendRedirect("newsline");
         } else if ("create".equals(action) || "update".equals(action)){
-            final News news = action.equals("create") ?
+            final News news = "create".equals(action) ?
                     new News("", LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", "") :
                     newsController.get(getId(request));
             request.setAttribute("news", news);

@@ -6,6 +6,7 @@ import com.valrock.newsline.util.exception.NotFoundException;
 import org.apache.commons.fileupload.FileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -33,6 +34,8 @@ public class NewsServiceImpl implements NewsService{
 
     @Override
     public Collection<News> getBetweenDateTimes(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
+        Assert.notNull(startDateTime, "startDateTime must not be null");
+        Assert.notNull(endDateTime, "endDateTime must not be null");
         return repository.getBetween(startDateTime, endDateTime, userId);
     }
 
@@ -43,11 +46,13 @@ public class NewsServiceImpl implements NewsService{
 
     @Override
     public News update(News news, int userId, String path, FileItem item) throws NotFoundException {
+        Assert.notNull(news, "news must not be null");
         return checkNotFoundWithId(repository.save(news, userId, path, item), news.getId());
     }
 
     @Override
     public News save(News news, int userId, String path, FileItem item) {
+        Assert.notNull(news, "news must not be null");
         return repository.save(news, userId, path, item);
     }
 }

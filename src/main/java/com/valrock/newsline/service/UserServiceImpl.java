@@ -5,6 +5,7 @@ import com.valrock.newsline.repository.UserRepository;
 import com.valrock.newsline.util.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
+        Assert.notNull(user, "user must not be null");
         return userRepository.save(user);
     }
 
@@ -37,6 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByEmail(String email) throws NotFoundException {
+        Assert.notNull(email, "email must not be null");
         return checkNotFound(userRepository.getByEmail(email), "email=" + email);
     }
 
@@ -47,6 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User user) {
+        Assert.notNull(user, "user must not be null");
         userRepository.save(user);
     }
 }

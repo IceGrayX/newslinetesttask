@@ -15,40 +15,40 @@ import static com.valrock.newsline.util.ValidationUtil.checkNew;
  * Created by Валерий on 17.03.2017.
  */
 public abstract class AbstractUserController {
-    protected final Logger LOG = LoggerFactory.getLogger(getClass());
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private UserService userService;
 
     public List<User> getAll(){
-        LOG.info("getAll");
+        log.info("getAll");
         return userService.getAll();
     }
 
     public User get(int id){
-        LOG.info("get " + id);
+        log.info("get " + id);
         return userService.get(id);
     }
 
     public User create(User user){
         checkNew(user);
-        LOG.info("create " + user);
+        log.info("create " + user);
         return userService.save(user);
     }
 
     public void delete(int id){
-        LOG.info("delete " + id);
+        log.info("delete " + id);
         userService.delete(id);
     }
 
     public void update(User user, int id){
         checkIdConsistent(user, id);
-        LOG.info("update " + user);
+        log.info("update " + user);
         userService.update(user);
     }
 
     public User getByMail(String email){
-        LOG.info("getByEmail " + email);
+        log.info("getByEmail " + email);
         return userService.getByEmail(email);
     }
 }

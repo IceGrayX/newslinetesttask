@@ -7,6 +7,9 @@ import com.valrock.newsline.util.exception.NotFoundException;
  * Created by Валерий on 17.03.2017.
  */
 public class ValidationUtil {
+    public ValidationUtil() {
+    }
+
     public static void checkNotFoundWithId(boolean found, int id){
         checkNotFound(found, "id=" + id);
     }
@@ -21,7 +24,9 @@ public class ValidationUtil {
     }
 
     private static void checkNotFound(boolean found, String msg) {
-        if (!found) throw new NotFoundException("Not found entity with " + msg);
+        if (!found) {
+            throw new NotFoundException("Not found entity with " + msg);
+        }
     }
 
     public static void checkNew(BaseEntity entity){

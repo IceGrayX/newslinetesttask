@@ -10,7 +10,6 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -31,7 +30,6 @@ public class InMemoryNewsRepositoryImpl implements NewsRepository {
 
     @Override
     public News save(News news, int userId, String path, FileItem item) {
-        Objects.requireNonNull(news);
 
         Map<Integer, News> newsMap = repository.computeIfAbsent(userId, ConcurrentHashMap::new);
         if (news.isNew()){
@@ -65,18 +63,16 @@ public class InMemoryNewsRepositoryImpl implements NewsRepository {
         return getAllAsStream(userId).collect(Collectors.toList());
     }
 
+    @Override
+    public Collection<News> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
+        return getAllAsStream(userId)
+                .filter(news -> DateTimeUtil.isBetween(news.getDateTime(), startDateTime, endDateTime))
+                .collect(Collectors.toList());
+    }
+
     private Stream<News> getAllAsStream(int userId) {
         Map<Integer, News> newsMap = repository.get(userId);
         return newsMap == null ?
                 Stream.empty() : newsMap.values().stream().sorted(NEWS_COMPARATOR);
-    }
-
-    @Override
-    public Collection<News> getBetween(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
-        Objects.requireNonNull(startDateTime);
-        Objects.requireNonNull(endDateTime);
-        return getAllAsStream(userId)
-                .filter(news -> DateTimeUtil.isBetween(news.getDateTime(), startDateTime, endDateTime))
-                .collect(Collectors.toList());
     }
 }
