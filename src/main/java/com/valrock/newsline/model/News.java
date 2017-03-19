@@ -15,7 +15,7 @@ public class News extends BaseEntity{
 
     private final String textnews;
 
-    private final String imageName;
+    private String imageName;
 
     public News(String header, LocalDateTime dateTime, String textnews, String imageName) {
         this(null, header, dateTime, textnews, imageName);
@@ -43,6 +43,10 @@ public class News extends BaseEntity{
 
     public String getImageName() {
         return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public LocalDate getDate(){

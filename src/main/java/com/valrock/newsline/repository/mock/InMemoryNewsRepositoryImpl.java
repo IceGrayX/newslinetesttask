@@ -4,6 +4,7 @@ import com.valrock.newsline.model.News;
 import com.valrock.newsline.repository.NewsRepository;
 import com.valrock.newsline.util.DateTimeUtil;
 import com.valrock.newsline.util.NewsUtil;
+import org.apache.commons.fileupload.FileItem;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.util.stream.Stream;
 
 import static com.valrock.newsline.repository.mock.InMemoryUserRepositoryImpl.USER_ID;
 import static com.valrock.newsline.util.NewsUtil.deleteFile;
+import static com.valrock.newsline.util.NewsUtil.saveFile;
 
 /**
  * Created by Валерий on 17.03.2017.
@@ -30,7 +32,7 @@ public class InMemoryNewsRepositoryImpl implements NewsRepository {
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
-        NewsUtil.NEWS_LIST.forEach(news -> save(news, USER_ID));
+//        NewsUtil.NEWS_LIST.forEach(news -> save(news, USER_ID));
 
 /*        save(new News("NewsAdmin1", LocalDateTime.of(2017, Month.MARCH, 1, 10, 0), "texttexttexttexttexttext", "imageURL1"), ADMIN_ID);
         save(new News("NewsAdmin2", LocalDateTime.of(2017, Month.MARCH, 2, 11, 0), "texttexttexttexttexttext", "imageURL2"), ADMIN_ID);*/
@@ -38,14 +40,18 @@ public class InMemoryNewsRepositoryImpl implements NewsRepository {
 
 
     @Override
-    public News save(News news, int userId) {
+    public News save(News news, int userId, String path, FileItem item) {
         Objects.requireNonNull(news);
 
         Map<Integer, News> newsMap = repository.computeIfAbsent(userId, ConcurrentHashMap::new);
         if (news.isNew()){
             news.setId(counter.incrementAndGet());
+            news.setImageName(saveFile(path, item));
         } else if (get(news.getId(), userId) == null){
             return null;
+        } else {
+            deleteFile(path + newsMap.get(news.getId()).getImageName());
+            news.setImageName(saveFile(path, item));
         }
         newsMap.put(news.getId(), news);
         return news;

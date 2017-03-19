@@ -1,7 +1,6 @@
 package com.valrock.newsline.web;
 
 import com.valrock.newsline.model.News;
-import com.valrock.newsline.util.NewsUtil;
 import com.valrock.newsline.web.news.NewsRestController;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -20,7 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -57,40 +55,28 @@ public class NewsServlet extends HttpServlet {
         boolean isMultipart = ServletFileUpload.isMultipartContent(request);
         if (isMultipart){
             try {
-                String id = null;
-                String header = null;
-                String dateTime = null;
-                String textnews = null;
-                String imageName = null;
+                String id;
+                String header;
+                String dateTime;
+                String textnews;
+                String path = request.getServletContext().getRealPath("");
+                FileItem item;
                 List items = upload.parseRequest(request);
-                Iterator iterator = items.iterator();
-                while (iterator.hasNext()){
-                    FileItem item = (FileItem) iterator.next();
-                    if (item.isFormField()){
-                        switch (item.getFieldName()){
-                            case "id": id = item.getString("UTF-8");
-                                        break;
-                            case "header": header = item.getString("UTF-8");
-                                break;
-                            case "dateTime": dateTime = item.getString("UTF-8");
-                                break;
-                            case "textnews": textnews = item.getString("UTF-8");
-                                break;
-                        }
-                    } else {
-                        String path = getServletContext().getRealPath("");
-                        imageName = NewsUtil.saveFile(item.getName(), path, item);
-                    }
-                }
+                id = ((FileItem) items.get(0)).getString("UTF-8");
+                header = ((FileItem) items.get(1)).getString("UTF-8");
+                dateTime = ((FileItem) items.get(2)).getString("UTF-8");
+                textnews = ((FileItem) items.get(3)).getString("UTF-8");
+                item = (FileItem) items.get(4);
+
                 News news = new News(id.isEmpty() ? null : Integer.valueOf(id),
-                        header, LocalDateTime.parse(dateTime), textnews, imageName);
+                        header, LocalDateTime.parse(dateTime), textnews, "");
 
                 if (news.isNew()){
                     LOG.info("Create {}", news);
-                    newsController.create(news);
+                    newsController.create(news, path, item);
                 } else {
                     LOG.info("Update {}", news);
-                    newsController.update(news, getId(request));
+                    newsController.update(news, news.getId(), path, item);
                 }
                 response.sendRedirect("newsline");
             } catch (FileUploadException e) {

@@ -5,6 +5,7 @@ import com.valrock.newsline.model.News;
 import com.valrock.newsline.service.NewsService;
 import com.valrock.newsline.util.DateTimeUtil;
 import com.valrock.newsline.util.NewsUtil;
+import org.apache.commons.fileupload.FileItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,18 +46,18 @@ public class NewsRestController {
         return newsService.getAll(userId);
     }
 
-    public News create(News news){
+    public News create(News news, String path, FileItem item){
         checkNew(news);
         int userId = AuthorizedUser.id();
         LOG.info("create {} for User {}", news, userId);
-        return newsService.save(news, userId);
+        return newsService.save(news, userId, path, item);
     }
 
-    public void update(News news, int id){
+    public void update(News news, int id, String path, FileItem item){
         checkIdConsistent(news, id);
         int userId = AuthorizedUser.id();
         LOG.info("update {} for User {}", news, userId);
-        newsService.update(news, userId);
+        newsService.update(news, userId, path, item);
     }
 
     public Collection<News> getBetween(LocalDate startDate, LocalTime startTime, LocalDate endDate, LocalTime endTime){

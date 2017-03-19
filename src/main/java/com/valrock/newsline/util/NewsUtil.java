@@ -41,9 +41,9 @@ public class NewsUtil {
 
     }
 
-    public static String saveFile(String imageName, String path, FileItem item){
+    public static String saveFile(String path, FileItem item){
         File file;
-        String newImageName = "upload/" + random.nextInt() + imageName;
+        String newImageName = "upload/" + random.nextInt() + item.getName();
         do {
             path = path + newImageName;
             file = new File(path);

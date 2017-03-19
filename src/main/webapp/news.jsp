@@ -50,7 +50,7 @@
         </dl>
         <dl>
             <dt>Image:</dt>
-            <dd><input type="file"  name="image"></dd>
+            <dd><input type="file"  name="image" value="${news.imageName}"></dd>
         </dl>
         <button type="submit">Save</button>
         <button onclick="window.history.back()">Cancel</button>

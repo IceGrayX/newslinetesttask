@@ -3,6 +3,7 @@ package com.valrock.newsline.service;
 import com.valrock.newsline.model.News;
 import com.valrock.newsline.repository.NewsRepository;
 import com.valrock.newsline.util.exception.NotFoundException;
+import org.apache.commons.fileupload.FileItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,12 +42,12 @@ public class NewsServiceImpl implements NewsService{
     }
 
     @Override
-    public News update(News news, int userId) throws NotFoundException {
-        return checkNotFoundWithId(repository.save(news, userId), news.getId());
+    public News update(News news, int userId, String path, FileItem item) throws NotFoundException {
+        return checkNotFoundWithId(repository.save(news, userId, path, item), news.getId());
     }
 
     @Override
-    public News save(News news, int userId) {
-        return repository.save(news, userId);
+    public News save(News news, int userId, String path, FileItem item) {
+        return repository.save(news, userId, path, item);
     }
 }

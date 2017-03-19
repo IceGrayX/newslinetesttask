@@ -2,6 +2,7 @@ package com.valrock.newsline.service;
 
 import com.valrock.newsline.model.News;
 import com.valrock.newsline.util.exception.NotFoundException;
+import org.apache.commons.fileupload.FileItem;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,7 +25,7 @@ public interface NewsService {
 
     Collection<News> getAll(int userId);
 
-    News update(News news, int userId) throws NotFoundException;
+    News update(News news, int userId, String path, FileItem item) throws NotFoundException;
 
-    News save(News news, int userId);
+    News save(News news, int userId, String path, FileItem item);
 }
