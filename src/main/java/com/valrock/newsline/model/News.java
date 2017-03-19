@@ -9,28 +9,30 @@ import java.time.LocalTime;
  */
 public class News extends BaseEntity{
 
-    private final String header;
+    private String newsHeader;
 
-    private final LocalDateTime dateTime;
+    private LocalDateTime dateTime;
 
-    private final String textnews;
+    private String textnews;
 
     private String imageName;
 
-    public News(String header, LocalDateTime dateTime, String textnews, String imageName) {
-        this(null, header, dateTime, textnews, imageName);
+    public News(){}
+
+    public News(String newsHeader, LocalDateTime dateTime, String textnews, String imageName) {
+        this(null, newsHeader, dateTime, textnews, imageName);
     }
 
-    public News(Integer id, String header, LocalDateTime dateTime, String textnews, String imageName){
+    public News(Integer id, String newsHeader, LocalDateTime dateTime, String textnews, String imageName){
         super(id);
-        this.header = header;
+        this.newsHeader = newsHeader;
         this.dateTime = dateTime;
         this.textnews = textnews;
         this.imageName = imageName;
     }
 
-    public String getHeader() {
-        return header;
+    public String getNewsHeader() {
+        return newsHeader;
     }
 
     public LocalDateTime getDateTime() {
@@ -49,6 +51,18 @@ public class News extends BaseEntity{
         this.imageName = imageName;
     }
 
+    public void setNewsHeader(String newsHeader) {
+        this.newsHeader = newsHeader;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public void setTextnews(String textnews) {
+        this.textnews = textnews;
+    }
+
     public LocalDate getDate(){
         return dateTime.toLocalDate();
     }
@@ -61,7 +75,7 @@ public class News extends BaseEntity{
     public String toString() {
         return "News{" +
                 "id=" + id +
-                ", header='" + header + '\'' +
+                ", newsHeader='" + newsHeader + '\'' +
                 ", dateTime=" + dateTime +
                 ", textnews='" + textnews + '\'' +
                 ", imageName='" + imageName + '\'' +

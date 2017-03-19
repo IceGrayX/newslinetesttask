@@ -53,7 +53,7 @@
             <jsp:useBean id="news" scope="page" type="com.valrock.newsline.model.News"/>
             <tr class="${news}">
                 <td><img src="${news.imageName}"/></td>
-                <td>${news.header}</td>
+                <td>${news.newsHeader}</td>
                 <td>${news.textnews}</td>
                 <td>${news.dateTime.toLocalDate()} ${news.dateTime.toLocalTime()}</td>
                 <td><a href="newsline?action=update&id=${news.id}">Update</a></td>

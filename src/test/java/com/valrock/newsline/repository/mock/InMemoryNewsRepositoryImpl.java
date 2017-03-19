@@ -29,14 +29,6 @@ public class InMemoryNewsRepositoryImpl implements NewsRepository {
     private Map<Integer, Map<Integer, News>> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
-    {
-//        NewsUtil.NEWS_LIST.forEach(news -> save(news, USER_ID));
-
-/*        save(new News("NewsAdmin1", LocalDateTime.of(2017, Month.MARCH, 1, 10, 0), "texttexttexttexttexttext", "imageURL1"), ADMIN_ID);
-        save(new News("NewsAdmin2", LocalDateTime.of(2017, Month.MARCH, 2, 11, 0), "texttexttexttexttexttext", "imageURL2"), ADMIN_ID);*/
-    }
-
-
     @Override
     public News save(News news, int userId, String path, FileItem item) {
         Objects.requireNonNull(news);

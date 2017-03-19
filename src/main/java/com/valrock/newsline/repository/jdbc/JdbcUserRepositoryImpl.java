@@ -33,7 +33,7 @@ public class JdbcUserRepositoryImpl implements UserRepository {
     @Autowired
     public JdbcUserRepositoryImpl(DataSource dataSource){
         this.insertUser = new SimpleJdbcInsert(dataSource)
-                .withTableName("USERS")
+                .withTableName("users")
                 .usingGeneratedKeyColumns("id");
     }
 

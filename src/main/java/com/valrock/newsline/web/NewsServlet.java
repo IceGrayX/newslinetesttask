@@ -61,20 +61,20 @@ public class NewsServlet extends HttpServlet {
             if (isMultipart){
                 try {
                     String id;
-                    String header;
+                    String newsHeader;
                     String dateTime;
                     String textnews;
                     String path = request.getServletContext().getRealPath("");
                     FileItem item;
                     List items = upload.parseRequest(request);
                     id = ((FileItem) items.get(0)).getString("UTF-8");
-                    header = ((FileItem) items.get(1)).getString("UTF-8");
+                    newsHeader = ((FileItem) items.get(1)).getString("UTF-8");
                     dateTime = ((FileItem) items.get(2)).getString("UTF-8");
                     textnews = ((FileItem) items.get(3)).getString("UTF-8");
                     item = (FileItem) items.get(4);
 
                     News news = new News(id.isEmpty() ? null : Integer.valueOf(id),
-                            header, LocalDateTime.parse(dateTime), textnews, "");
+                            newsHeader, LocalDateTime.parse(dateTime), textnews, "");
 
                     if (id.isEmpty()){
                         LOG.info("Create {}", news);

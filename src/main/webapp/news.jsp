@@ -21,7 +21,7 @@
         <input type="hidden" name="id" value="${news.id}">
         <dl>
             <dt>Header:</dt>
-            <dd><input type="text" value="${news.header}" size="40" name="header"></dd>
+            <dd><input type="text" value="${news.newsHeader}" size="40" name="newsHeader"></dd>
         </dl>
         <dl>
             <dt>DateTime:</dt>

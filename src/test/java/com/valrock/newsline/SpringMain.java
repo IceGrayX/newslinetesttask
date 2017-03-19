@@ -1,6 +1,8 @@
 package com.valrock.newsline;
 
 import com.valrock.newsline.model.News;
+import com.valrock.newsline.model.Role;
+import com.valrock.newsline.model.User;
 import com.valrock.newsline.web.news.NewsRestController;
 import com.valrock.newsline.web.user.AdminRestController;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -20,7 +22,7 @@ public class SpringMain {
         try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")){
             System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
-            adminUserController.create(UserTestData.USER);
+            adminUserController.create(new User(null, "userName", "email", "password", Role.ROLE_ADMIN));
             System.out.println();
 
             NewsRestController newsController = appCtx.getBean(NewsRestController.class);
