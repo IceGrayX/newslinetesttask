@@ -1,5 +1,7 @@
 package com.valrock.newsline.model;
 
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -16,6 +18,9 @@ public class News extends BaseEntity{
     private String textnews;
 
     private String imageName;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     public News(){}
 
@@ -69,6 +74,14 @@ public class News extends BaseEntity{
 
     public LocalTime getTime(){
         return dateTime.toLocalTime();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
