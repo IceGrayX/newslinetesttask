@@ -2,7 +2,7 @@ package com.valrock.newsline.model;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -30,11 +30,11 @@ public class User extends NamedEntity {
 
     @Column(name = "email", nullable = false, unique = true)
     @Email
-    @NotEmpty
+    @NotBlank
     private String email;
 
     @Column(name = "password", nullable = false)
-    @NotEmpty
+    @NotBlank
     @Length(min = 5)
     private String password;
 
