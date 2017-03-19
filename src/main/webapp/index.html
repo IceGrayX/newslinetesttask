@@ -7,9 +7,13 @@
 <body>
 <h3>News line test task project</h3>
 <hr>
-<ul>
-    <li><a href="users">Users List</a></li>
-    <li><a href="newsline">News List</a></li>
-</ul>
+<form method="post" action="users">
+    <b>News list of:</b>
+    <select name="userId">
+        <option value="1">User</option>
+        <option value="2">Admin</option>
+    </select>
+    <button type="submit">Select</button>
+</form>
 </body>
 </html>

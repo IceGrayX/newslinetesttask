@@ -1,5 +1,6 @@
 package com.valrock.newsline.web;
 
+import com.valrock.newsline.AuthorizedUser;
 import org.slf4j.Logger;
 
 import javax.servlet.ServletException;
@@ -15,6 +16,13 @@ import static org.slf4j.LoggerFactory.getLogger;
  */
 public class UserServlet extends HttpServlet {
     private static final Logger LOG = getLogger(UserServlet.class);
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int userId = Integer.valueOf(request.getParameter("userId"));
+        AuthorizedUser.setId(userId);
+        response.sendRedirect("newsline");
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
